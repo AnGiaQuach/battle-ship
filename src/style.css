@@ -1,0 +1,50 @@
+/* https://colorhunt.co/palette/6482ad7fa1c3e2dad6f5eded */
+
+:root {
+  --primaryColor: #6482ad;
+  --secondaryColor: #7fa1c3;
+  --accentColorLight: #e2dad6;
+  --accentColorSoft: #f5eded;
+}
+
+.container {
+  margin: auto 0;
+  margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.game-board {
+  display: flex;
+  gap: 3rem;
+}
+
+.board {
+  height: 20rem;
+  width: 20rem;
+  background-color: #e2dad6;
+  border-radius: 2.5%;
+
+  display: grid;
+  grid-template-rows: repeat(11, 1fr);
+  grid-template-columns: repeat(11, 1fr);
+  gap: 1px;
+}
+
+.play-Btn {
+  display: block;
+  height: 2.5rem;
+  width: 5rem;
+
+  background-color: #f5eded;
+  font-weight: bold;
+  border-radius: 5%;
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.float {
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
