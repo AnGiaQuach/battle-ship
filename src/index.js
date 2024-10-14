@@ -1,6 +1,7 @@
 import "./style.css";
 import { loadGridIndex, loadGridCells } from "./load";
 import { Player, Cordinate } from "./board";
+import { randomizeShipCordinate } from "./randomize";
 
 const player1Name = "human";
 const player2Name = "bot";
@@ -9,6 +10,11 @@ let player1 = new Player(player1Name);
 let player2 = new Player(player2Name);
 
 let playTurn = "player1";
+
+function checkMarkDOM(x, y, playerNum, val) {
+  const targetDiv = document.querySelector(`#c-${x}-${y}-${playerNum}`);
+  targetDiv.textContent = val;
+}
 
 const controller = (function () {
   function getRandomInRange(range) {
@@ -29,6 +35,7 @@ const controller = (function () {
 
     let { x, y } = move[getRandomInRange(move.length - 1)];
     player1.board.check(x, y);
+    checkMarkDOM(x, y, 1, player1.board.board[x][y]);
   }
 
   function evaluateWinner() {
@@ -65,6 +72,7 @@ const controller = (function () {
 
         if (player2.board.check(x, y)) {
           console.log("player1 attacked player2!");
+          checkMarkDOM(x, y, 2, player2.board.board[x][y]);
           player2.board.toString();
 
           console.log("player2 attacked player1!");
@@ -90,28 +98,23 @@ const controller = (function () {
   return { addEventForCell };
 })();
 
-function getRandomInRange(range) {
-  return Math.floor(Math.random() * range);
+const shipSize1 = [4, 3, 3, 2, 2, 1, 1, 1, 1];
+const shipSize2 = [4, 3, 3, 2, 2, 1, 1, 1, 1];
+const cord1 = randomizeShipCordinate(shipSize1);
+const cord2 = randomizeShipCordinate(shipSize2);
+
+for (const c1 of cord1) {
+  const { x1, y1, x2, y2 } = c1;
+  player1.board.addShip(x1, y1, x2, y2);
 }
 
-const cord = [
-  new Cordinate(1, 1, 1, 3),
-  new Cordinate(1, 6, 1, 7),
-  new Cordinate(3, 9, 3, 9),
-  new Cordinate(4, 3, 4, 6),
-  new Cordinate(6, 2, 6, 2),
-  new Cordinate(6, 7, 6, 7),
-  new Cordinate(5, 10, 6, 10),
-  new Cordinate(8, 1, 8, 2),
-  new Cordinate(8, 7, 8, 9),
-  new Cordinate(10, 10, 10, 10),
-];
-
-for (const c of cord) {
-  const { x1, y1, x2, y2 } = c;
-  player1.board.addShip(x1, y1, x2, y2);
+for (const c2 of cord2) {
+  const { x1, y1, x2, y2 } = c2;
   player2.board.addShip(x1, y1, x2, y2);
 }
+
+console.log(player1.board.shipList);
+console.log(player2.board.shipList);
 
 loadGridIndex(1);
 loadGridIndex(2);
